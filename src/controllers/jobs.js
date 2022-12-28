@@ -1,6 +1,8 @@
 const getJobs = async (req, res) => {};
 
-const createJob = async (req, res) => {};
+const createJob = async (req, res) => {
+  res.json(req.user)
+};
 
 const getJob = async (req, res) => {};
 
