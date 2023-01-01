@@ -4,6 +4,12 @@ const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   try {
+    const email = req.body.email;
+    const password = req.body.password;
+    const name = req.body.name;
+    if (!email || password || name) {
+      return res.status(400).json({ msg: "invalid credentials" });
+    }
     const user = await User.create({ ...req.body });
     const token = jwt.sign(
       { userId: user._id, name: user.name },
