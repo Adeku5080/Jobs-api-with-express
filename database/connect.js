@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
 
-const connectDb = (url) => {
-  return mongoose
-    .connect(url, {
-      useNewUrlParser: true,
-    })
-    .then(() => console.log("db connection succesful"));
+const connectDb = (uri) => {
+  mongoose
+    .connect(uri)
+    .then(() => console.log("db connection succesful"))
+    .catch((err) => console.log(err));
 };
 
 module.exports = connectDb;

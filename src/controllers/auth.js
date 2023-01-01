@@ -1,13 +1,15 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 
 const register = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
     const name = req.body.name;
-    if (!email || password || name) {
+    if (!email || !password || !name) {
       return res.status(400).json({ msg: "invalid credentials" });
     }
     const user = await User.create({ ...req.body });
