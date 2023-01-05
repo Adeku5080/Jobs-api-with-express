@@ -2,6 +2,7 @@ const express = require("express");
 const authRouter = require("./routes/auth");
 const jobRouter = require("./routes/jobs");
 const authMiddleware = require("./src/middlewares/auth");
+const errorHandler  = require("./src/middlewares/error-handler")
 
 const app = express();
 const helmet = require("helmet");
@@ -23,5 +24,6 @@ app.use(xss());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authMiddleware, jobRouter);
+app.use(errorHandler)
 
 module.exports = app;

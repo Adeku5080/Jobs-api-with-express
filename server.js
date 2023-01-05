@@ -1,5 +1,5 @@
 const app = require("./app");
- require("./database/connect");
+ const connectDb=require("./database/connect");
 require("dotenv").config();
 
 
@@ -7,6 +7,9 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, () => {});
+app.listen(PORT, () => {
+    console.log(`you are listening on port ${PORT}`)
+});
 
+connectDb(process.env.MONGO_URI)
 
