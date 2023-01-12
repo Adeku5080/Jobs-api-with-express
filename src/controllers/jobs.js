@@ -1,10 +1,12 @@
 const Job = require("../models/Job");
 const { StatusCodes } = require("http-status-codes");
+const CustomAPIErrors = require("../../errors/custom-error.js");
 
 //get all jobs associated with this user
 const getJobs = async (req, res, next) => {
   try {
     const userId = req.user.userId;
+    console.log(userId, "onimisiId");
 
     const jobs = await Job.find({ createdBy: userId }).sort("createdAt");
 
@@ -16,6 +18,7 @@ const getJobs = async (req, res, next) => {
 
 const createJob = async (req, res, next) => {
   try {
+    console.log(req.user);
     req.body.createdBy = req.user.userId;
 
     const job = await Job.create(req.body);
@@ -31,18 +34,17 @@ const createJob = async (req, res, next) => {
 const getJob = async (req, res, next) => {
   try {
     const id = req.params.id;
+    const userId = req.user.userId;
 
-    const job = await job.findOne({ _id: id, createdBy: req.user.userId });
+    const job = await Job.findOne({ _id: id, createdBy: userId });
 
     if (!job) {
-      return res
-        .status(404)
-        .json({ msg: "Job with the given id does not exist" });
+      return res.status(404).json({ msg: "Job with this id doesnt exist" });
     }
 
     res.status(200).json({ job });
   } catch (err) {
-    next(err);
+    console.log(err);
   }
 };
 
